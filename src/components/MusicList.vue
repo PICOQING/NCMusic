@@ -1,5 +1,7 @@
 <template>
     <div class="" >{{playlistdetail.name}}</div>
+    <div>{{ playlistdetail.des }}</div>
+    <div></div>
 </template>
 
 <script setup lang="ts">
@@ -20,7 +22,7 @@ interface PlayListDetailItem{
   tags: string[];
 }
 
-let playlistdetail = reactive<PlayListDetailItem>({
+const playlistdetail = reactive<PlayListDetailItem>({
   name: '',
   covimg: '',
   des: '',
@@ -32,12 +34,11 @@ const fetchPlayListDetail = async() => {
         if(!id) return
         const response = await api.get<PlayListDetail>("/playlist/detail?", { id })
         const detail = response.playlist
-        playlistdetail = {
-            name: detail?.name || "歌曲列表",
-            covimg: detail?.coverImgUrl || "",
-            des: detail?.description || "",
-            tags:detail?.tags || []
-        }
+        playlistdetail.name = detail?.name || "歌曲列表";
+        playlistdetail.covimg = detail?.coverImgUrl || "";
+        playlistdetail.des = detail?.description || "";
+        playlistdetail.tags = detail?.tags || [];
+
         console.log(playlistdetail)
     }catch(error) {
         console.error('获取歌单内容失败:', error);

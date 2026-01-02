@@ -8,4 +8,6 @@
   import BasicNavbar from './components/BasicNavbar.vue';
 </script>
 
-<style scoped></style>
+<style>
+  
+</style>

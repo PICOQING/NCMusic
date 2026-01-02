@@ -1,7 +1,17 @@
 <template>
-    <div class="" >{{playlistdetail.name}}</div>
-    <div>{{ playlistdetail.des }}</div>
-    <div></div>
+    <div class="playlist-wrapper">
+        <div class="playlist-inner">
+            <div class="playlist-info">
+                <div class="playlist-cover">
+                    <img :src="playlistdetail.covimg" alt="歌单封面">
+                </div>
+                <div class="" >{{playlistdetail.name}}</div>
+                <div>{{ playlistdetail.des }}</div>
+            </div>
+
+        </div>
+    </div>
+
 </template>
 
 <script setup lang="ts">
@@ -52,6 +62,32 @@ onMounted(() => {
 });
 </script>
 
-<style>
-
+<style scoped>
+    .playlist-wrapper{
+        padding: 20px;
+        background-color: #f5f7fb;
+    }
+    .playlist-inner{
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: rgb(255, 255, 255);
+    }
+    .playlist-info{
+        display: flex;
+        gap: 20px;
+        height: 200px;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+    .playlist-cover {
+    width: 150px; 
+    height: 150px;
+    flex-shrink: 0; 
+    }
+    .playlist-cover img{
+        width: auto;
+        height: 100%;
+        object-fit: cover;
+    }
 </style>

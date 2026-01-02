@@ -1,15 +1,18 @@
 <template>
     <div class="playlist-wrapper">
-        <div class="playlist-inner">
-            <div class="playlist-info">
-                <div class="playlist-cover">
-                    <img :src="playlistdetail.covimg" alt="歌单封面">
+        <div class="playlist-back">
+            <div class="playlist-inner">
+                <div class="playlist-info">
+                    <div class="playlist-cover">
+                        <img :src="playlistdetail.covimg" alt="歌单封面">
+                    </div>
+                    <div class="" >{{playlistdetail.name}}</div>
+                    <div>{{ playlistdetail.des }}</div>
                 </div>
-                <div class="" >{{playlistdetail.name}}</div>
-                <div>{{ playlistdetail.des }}</div>
-            </div>
 
+            </div>
         </div>
+
     </div>
 
 </template>
@@ -67,10 +70,15 @@ onMounted(() => {
         padding: 20px;
         background-color: #f5f7fb;
     }
-    .playlist-inner{
+    .playlist-back{
         max-width: 1200px;
         margin: 0 auto;
         background-color: rgb(255, 255, 255);
+    }
+    .playlist-inner
+    {
+        max-width: 1100px;
+        margin: 0 auto;
     }
     .playlist-info{
         display: flex;
@@ -81,13 +89,18 @@ onMounted(() => {
         margin: 0;
     }
     .playlist-cover {
-    width: 150px; 
-    height: 150px;
-    flex-shrink: 0; 
+        width: 150px; 
+        height: 150px;
+        flex-shrink: 0; 
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 增强阴影 */
+        border-radius: 8px; /* 更圆润的边角 */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加过渡效果 */
     }
     .playlist-cover img{
         width: auto;
         height: 100%;
         object-fit: cover;
+        border-radius: 8px
     }
+    
 </style>

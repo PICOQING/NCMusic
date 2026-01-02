@@ -5,6 +5,7 @@ interface ApiResult<T = unknown> {
   code: number;
   result: T;
   artists?: T; // 有些接口返回 artists 字段
+  playlist?: T;
   message?: string;
 }
 

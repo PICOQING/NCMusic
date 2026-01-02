@@ -7,7 +7,8 @@
                 <li 
                     v-for="item in playlists"
                     :key="item.id"
-                    class="playlist-item">
+                    class="playlist-item"
+                    @click="handleMusicListClisk(item.id)">
                     <div class="playlist-cover">
                         <img :src="item.cover" :alt="item.name">
                     </div>
@@ -180,6 +181,17 @@ onMounted(() => {
     fetchNewMusics();
     fetchHotSingers();
 });
+
+// 跳转歌单列表页
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const handleMusicListClisk = (id: number) => {
+    if(!id) return;
+    router.push({
+        path: '/musicList',
+        query: { id }
+    });
+};
 
 </script>
 <style scoped>  

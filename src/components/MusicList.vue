@@ -46,7 +46,30 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="playlist-songs">
+                    <ul>
+                        <li
+                        v-for="song in playListSongs"
+                        :key="song.id"
+                        class="songs-item">
+                        <div class="songs-cover">
+                            <img :src="song.al.cover" :alt="song.al.name">
+                            {{ song.al.cover }}
+                        </div>
+                        <div class="songs-info">
+                            <p>{{song.al.name}}</p>
+                            <p>
+                                <ul>
+                                    <li
+                                    v-for="value in song.ar"
+                                    :key="value.id"
+                                    >{{value.name}}</li>
+                                </ul>
+                            </p>
+                        </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -59,7 +82,7 @@ import { computed, onMounted, reactive, nextTick, ref, onBeforeUnmount,watch} fr
 import { useRoute } from 'vue-router';
 import api from '@/api';
 
-import type { PlayListDetail } from '@/types/playlist';
+import type { PlayListDetail ,PlayListSongs} from '@/types/playlist';
 
 const route = useRoute();
 const playlistId = computed(() => route.query.id)
@@ -97,7 +120,6 @@ const fetchPlayListDetail = async() => {
         console.error('获取歌单内容失败:', error);
     }
 }
-
 
 // 歌单详情省略
 const props = defineProps({
@@ -172,12 +194,50 @@ const measureHeights = async () => {
   console.log('actualHeight:', actualHeight.value);
 };
 
-onMounted(async () => {
-  await fetchPlayListDetail();
-  await nextTick();
-  await measureHeights(); // 执行测量
+// 获取歌单所有歌曲
 
-  document.addEventListener('click', handleClickOutside);
+interface PlayListSongsItem{
+    id: number;
+    al: {
+        name: string;
+        cover: string;
+    };
+    ar: {
+        id: number,
+        name: string
+    }[]
+}
+const playListSongs = ref<PlayListSongsItem[]>([])
+const fetchPlayListSongs = async() => {
+    try {
+        const id = playlistId.value
+        if(!id) return
+        const response = await api.get<PlayListSongs[]>('/playlist/track/all', { id })
+        playListSongs.value = (response.songs || []).map((item) => ({
+            id: item.id,
+            al: {
+                name: item.al.name,
+                cover:item.al.picUrl
+            },
+            ar: item.ar.map(artist => ({
+                id: artist.id,
+                name:artist.name
+            }))
+        }));
+        console.log(playListSongs.value)
+    }catch(error) {
+        console.error('获取歌单歌曲失败:', error);
+    }
+}
+
+
+onMounted(async () => {
+    await fetchPlayListDetail();
+    await fetchPlayListSongs();
+    await nextTick();
+    await measureHeights(); // 执行测量
+
+    document.addEventListener('click', handleClickOutside);
 
 })
 
@@ -264,7 +324,7 @@ onBeforeUnmount(() => {
     .toggle-btn {
     background: none;
     border: none;
-    color: #1e88e5;
+    color: #999;
     cursor: pointer;
     font-size: 13px;
     padding: 4px 0;
@@ -297,10 +357,12 @@ onBeforeUnmount(() => {
     overflow-y: auto;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1;
     }
 
     .full-text {
+    padding-top:18px;
+    padding-bottom: 10px;
     margin: 0;
     white-space: pre-wrap;
     }
@@ -324,5 +386,65 @@ onBeforeUnmount(() => {
 
     .close-btn:hover {
     background: #f0f0f0;
+    }
+
+    .playlist-songs ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+
+    .songs-item {
+        display: flex; /* 关键：使用 flex 布局 */
+        gap: 10px; /* 设置项目之间的间距 */
+        align-items: center; /* 垂直居中对齐 */
+        /* border-bottom: 1px solid #eee; 可选：添加分隔线 */
+        border: 1px solid transparent; /* 初始边框为透明 */
+        padding: 8px 0; /* 可选：添加内边距 */
+        cursor: pointer;
+        transition: box-shadow 0.3s ease;
+        /* 可选：添加一点圆角使选中效果更柔和 */
+        border-radius: 4px;
+    }
+    
+    .songs-item:hover{
+        /* transform: translateY(-5px); */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 示例阴影 */
+    }
+
+    .songs-cover {
+        width: 50px; /* 设置图片宽度 */
+        height: 50px; /* 设置图片高度 */
+        border-radius: 8px; /* 可选：圆形图片 */
+        overflow: hidden; /* 隐藏超出部分 */
+    }
+
+    .songs-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 裁剪图片以填满容器 */
+    }
+
+    .songs-info {
+        flex-grow: 1; /* 让文本区域占据剩余空间 */
+    }
+
+    .songs-info p {
+        margin: 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .songs-info ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .songs-info li {
+        display: inline-block; /* 将列表项并排显示 */
+        margin-right: 8px;
     }
 </style>

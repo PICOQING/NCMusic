@@ -13,3 +13,16 @@ export interface PlayListDetail{
   description: string;
   tags: string[];
 }
+
+export interface PlayListSongs{
+  id: number;
+  al: {
+      name: string;
+      picUrl: string;
+  };
+  ar: [{
+      id: number,
+      name: string
+      }
+    ]
+}

@@ -225,17 +225,23 @@ const handleMusicListClisk = (id: number) => {
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         overflow: hidden;
-        width: 200px;
+        width: 100%;
+        max-width: 200px;
         cursor: pointer;
         transition: transform 0.3s;
     }
     .playlist-item:hover {
         transform: translateY(-5px);
     }
+    .playlist-cover{
+        height: 200px; 
+        overflow: hidden;
+    }
     .playlist-cover img {
         width: 100%;
-        height: auto;
+        height: 100%;
         display: block;
+        object-fit: cover;
     }
     .playlist-info {
         padding: 10px;

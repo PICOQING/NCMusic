@@ -51,7 +51,8 @@
                         <li
                         v-for="song in playListSongs"
                         :key="song.id"
-                        class="songs-item">
+                        class="songs-item"
+                        @click="handleMusicPlyerClick({ id:song.id ,name:song.al.name,cover:song.al.cover})">
                         <div class="songs-cover">
                             <img :src="song.al.cover" :alt="song.al.name">
                             {{ song.al.cover }}
@@ -115,7 +116,6 @@ const fetchPlayListDetail = async() => {
         playlistdetail.des = detail?.description || "";
         playlistdetail.tags = detail?.tags || [];
         playlistdetail.dess = "这是一段非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常"
-        console.log(playlistdetail)
     }catch(error) {
         console.error('获取歌单内容失败:', error);
     }
@@ -189,9 +189,6 @@ const measureHeights = async () => {
 
   // 恢复截断样式
   el.style.webkitLineClamp = lines.toString();
-
-  console.log('truncatedHeight:', truncatedHeight.value);
-  console.log('actualHeight:', actualHeight.value);
 };
 
 // 获取歌单所有歌曲
@@ -224,7 +221,6 @@ const fetchPlayListSongs = async() => {
                 name:artist.name
             }))
         }));
-        console.log(playListSongs.value)
     }catch(error) {
         console.error('获取歌单歌曲失败:', error);
     }
@@ -255,6 +251,19 @@ defineExpose({
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
+
+// 跳转歌曲页面
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const handleMusicPlyerClick = (songData: { id: number, name: string ,cover:string}) => {
+    const { id, name, cover } = songData;
+    console.log(songData)
+    if (!id) return
+        router.push({
+        path: '/musicplyer',
+        query: { id,name,cover }
+    });
+}
 
 </script>
 

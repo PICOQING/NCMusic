@@ -8,7 +8,7 @@
                     v-for="item in playlists"
                     :key="item.id"
                     class="playlist-item"
-                    @click="handleMusicListClisk(item.id)">
+                    @click="handleMusicListClick(item.id)">
                     <div class="playlist-cover">
                         <img :src="item.cover" :alt="item.name">
                     </div>
@@ -91,7 +91,6 @@ const fetchPlaylists = async () => {
         des: item.copywriter,
         cover: item.picUrl,
     }));
-    console.log('推荐歌单数据:', playlists.value);
     } catch (error) {
         console.error('获取推荐歌单失败:', error);
     }
@@ -117,7 +116,6 @@ const fetchNewMusics = async () => {
             cover: item.picUrl,
             artists: item.song?.artists?.map((artists) => artists.name).join('/ ') || '',
         }));
-        console.log('推荐新音乐数据:', newMusics.value);
     } catch (error) {
         console.error('获取推荐新音乐失败:', error);
     }
@@ -141,7 +139,6 @@ const fetchHotSingers = async () => {
             picUrl: item.picUrl,
             rank: index + 1
         }));
-        console.log('热门歌手数据:', hotSingers.value);
     } catch (error) {
         console.error('获取热门歌手失败:', error);
     }
@@ -185,7 +182,7 @@ onMounted(() => {
 // 跳转歌单列表页
 import { useRouter } from 'vue-router';
 const router = useRouter();
-const handleMusicListClisk = (id: number) => {
+const handleMusicListClick = (id: number) => {
     if(!id) return;
     router.push({
         path: '/musicList',

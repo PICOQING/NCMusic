@@ -11,7 +11,7 @@ import MyMusic from './components/MyMusic.vue'
 import MusicSearch from './components/MusicSearch.vue'
 import UserLogin from './components/UserLogin.vue'
 import MusicList from './components/MusicList.vue'
-
+import MusicPlayer from './components/MusicPlayer.vue'
 
 const app = createApp(App)
 
@@ -35,6 +35,10 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/musicList',
         component: MusicList
+    },
+    {
+        path: '/musicplyer',
+        component: MusicPlayer
     }
 ]
 

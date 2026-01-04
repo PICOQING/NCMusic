@@ -24,7 +24,8 @@
                 <li 
                 v-for="music in newMusics"
                 :key="music.id"
-                class="newmusic-item">
+                class="newmusic-item"
+                @click="handleMusicPlyerClick({id:music.id, name:music.name,cover:music.cover})">
                     <div class="newmusic-cover">
                         <img :src="music.cover" :alt="music.name" />
                     </div>
@@ -72,6 +73,8 @@ import { computed, onMounted, ref} from 'vue';
 import type { Playlist } from '@/types/playlist';
 import type { NewMusic } from '@/types/newsong';
 import type { HotSingers } from '@/types/hotsinger';
+
+import {handleMusicListClick,handleMusicPlyerClick} from '@/utils/commonFunction'
 
 // 推荐歌单数据
 interface PlaylistItem {
@@ -178,18 +181,6 @@ onMounted(() => {
     fetchNewMusics();
     fetchHotSingers();
 });
-
-// 跳转歌单列表页
-import { useRouter } from 'vue-router';
-const router = useRouter();
-const handleMusicListClick = (id: number) => {
-    if(!id) return;
-    router.push({
-        path: '/musicList',
-        query: { id }
-    });
-};
-
 </script>
 <style scoped>  
     .hall-wrapper {

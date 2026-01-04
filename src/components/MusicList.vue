@@ -83,6 +83,8 @@ import { computed, onMounted, reactive, nextTick, ref, onBeforeUnmount,watch} fr
 import { useRoute } from 'vue-router';
 import api from '@/api';
 
+import {handleMusicPlyerClick} from '@/utils/commonFunction'
+
 import type { PlayListDetail ,PlayListSongs} from '@/types/playlist';
 
 const route = useRoute();
@@ -115,7 +117,6 @@ const fetchPlayListDetail = async() => {
         playlistdetail.covimg = detail?.coverImgUrl || "";
         playlistdetail.des = detail?.description || "";
         playlistdetail.tags = detail?.tags || [];
-        playlistdetail.dess = "这是一段非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常"
     }catch(error) {
         console.error('获取歌单内容失败:', error);
     }
@@ -252,18 +253,6 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 
-// 跳转歌曲页面
-import { useRouter } from 'vue-router';
-const router = useRouter();
-const handleMusicPlyerClick = (songData: { id: number, name: string ,cover:string}) => {
-    const { id, name, cover } = songData;
-    console.log(songData)
-    if (!id) return
-        router.push({
-        path: '/musicplyer',
-        query: { id,name,cover }
-    });
-}
 
 </script>
 

@@ -52,7 +52,7 @@
                         v-for="song in playListSongs"
                         :key="song.id"
                         class="songs-item"
-                        @click="handleMusicPlyerClick({ id:song.id ,name:song.al.name,cover:song.al.cover})">
+                        @click="handleMusicPlyerClick(router,{ id:song.id ,name:song.al.name,cover:song.al.cover})">
                         <div class="songs-cover">
                             <img :src="song.al.cover" :alt="song.al.name">
                             {{ song.al.cover }}
@@ -80,13 +80,13 @@
 
 <script setup lang="ts">
 import { computed, onMounted, reactive, nextTick, ref, onBeforeUnmount,watch} from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter} from 'vue-router';
 import api from '@/api';
 
 import {handleMusicPlyerClick} from '@/utils/commonFunction'
-
 import type { PlayListDetail ,PlayListSongs} from '@/types/playlist';
 
+const router = useRouter();
 const route = useRoute();
 const playlistId = computed(() => route.query.id)
 // 获取歌单详情

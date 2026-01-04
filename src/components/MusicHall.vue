@@ -8,7 +8,7 @@
                     v-for="item in playlists"
                     :key="item.id"
                     class="playlist-item"
-                    @click="handleMusicListClick(item.id)">
+                    @click="handleMusicListClick(router,item.id)">
                     <div class="playlist-cover">
                         <img :src="item.cover" :alt="item.name">
                     </div>
@@ -25,7 +25,7 @@
                 v-for="music in newMusics"
                 :key="music.id"
                 class="newmusic-item"
-                @click="handleMusicPlyerClick({id:music.id, name:music.name,cover:music.cover})">
+                @click="handleMusicPlyerClick(router,{id:music.id, name:music.name,cover:music.cover})">
                     <div class="newmusic-cover">
                         <img :src="music.cover" :alt="music.name" />
                     </div>
@@ -73,8 +73,12 @@ import { computed, onMounted, ref} from 'vue';
 import type { Playlist } from '@/types/playlist';
 import type { NewMusic } from '@/types/newsong';
 import type { HotSingers } from '@/types/hotsinger';
+import { useRouter } from 'vue-router';
 
 import {handleMusicListClick,handleMusicPlyerClick} from '@/utils/commonFunction'
+
+
+const router = useRouter(); // 在组件中获取 router 实例
 
 // 推荐歌单数据
 interface PlaylistItem {
@@ -181,6 +185,8 @@ onMounted(() => {
     fetchNewMusics();
     fetchHotSingers();
 });
+
+
 </script>
 <style scoped>  
     .hall-wrapper {

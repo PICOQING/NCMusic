@@ -18,3 +18,12 @@ export const handleMusicPlyerClick = (router: Router,songData: { id: number, nam
         query: { id,name,cover }
     });
 }
+
+// 跳转歌手页面
+export const handleMusicArtistClick = (router: Router, id: number) => {
+    if (!id) return;
+    router.push({
+        path: '/musicartist',
+        query: { id }
+    });
+};

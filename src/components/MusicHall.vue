@@ -46,7 +46,8 @@
                             <li 
                             v-for="(singer) in slide"
                             :key="singer.id"
-                            class="hotsinger-item">
+                            class="hotsinger-item"
+                            @click="handleMusicArtistClick(router,singer.id)">
                                 <div class="hotsinger-cover">
                                     <img :src="singer.picUrl" :alt="singer.name" />
                                 </div>
@@ -75,7 +76,7 @@ import type { NewMusic } from '@/types/newsong';
 import type { HotSingers } from '@/types/hotsinger';
 import { useRouter } from 'vue-router';
 
-import {handleMusicListClick,handleMusicPlyerClick} from '@/utils/commonFunction'
+import {handleMusicListClick, handleMusicPlyerClick, handleMusicArtistClick} from '@/utils/commonFunction'
 
 
 const router = useRouter(); // 在组件中获取 router 实例

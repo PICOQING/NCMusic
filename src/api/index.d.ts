@@ -9,6 +9,7 @@ interface ApiResult<T = unknown> {
   songs?: T;
   data?: T;
   message?: string;
+  artist?: T;
 }
 
 // 因为响应拦截器返回了 response.data，

@@ -29,7 +29,6 @@ import type { MusicPlayer } from '@/types/musicplyer';
 
 const route = useRoute();
 const musicdata = computed(() => route.query);
-console.log(musicdata.value)
 interface MusicPlayerItem{
     id: string;
     name: string;
@@ -50,7 +49,6 @@ const fetchMusic = async () => {
             url: item.url,
             cover: musicdata.value.cover as string,
         }))
-        console.log(musicplayer.value);
     }catch(error){
         console.error('获取歌曲失败:', error);
     }

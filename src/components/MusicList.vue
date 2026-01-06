@@ -112,11 +112,10 @@ const fetchPlayListDetail = async() => {
         const id = playlistId.value
         if(!id) return
         const response = await api.get<PlayListDetail>("/playlist/detail?", { id })
-        const detail = response.playlist
-        playlistdetail.name = detail?.name || "歌曲列表";
-        playlistdetail.covimg = detail?.coverImgUrl || "";
-        playlistdetail.des = detail?.description || "";
-        playlistdetail.tags = detail?.tags || [];
+        playlistdetail.name = response.playlist?.name || "歌曲列表";
+        playlistdetail.covimg = response.playlist?.coverImgUrl || "";
+        playlistdetail.des = response.playlist?.description || "";
+        playlistdetail.tags = response.playlist?.tags || [];
     }catch(error) {
         console.error('获取歌单内容失败:', error);
     }

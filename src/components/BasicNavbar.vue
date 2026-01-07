@@ -30,12 +30,18 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView,useRouter } from 'vue-router';
 import { ref } from 'vue';
 const searchKeyword = ref('');
+const router = useRouter();
 const handleSearch = () => {
     const keyword = searchKeyword.value.trim();
+    if(keyword === '') return
     console.log('搜索关键词:', keyword);
+    router.push({
+        path: '/search',
+        query:{keyword}
+    })
 };
 </script>
 

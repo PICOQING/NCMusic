@@ -2,7 +2,7 @@
     <div class="musicplayer-wrapper">
         <div class="musicplayer-inner">
             <div class="musicplayer-cover">
-                <img :src="musicplayer[0]?.cover" 
+                <img :src="musiccover[0]?.al.picUrl" 
                 :alt="musicplayer[0]?.name" 
                 class="cover-image"/>
             </div>
@@ -15,7 +15,7 @@
                 >您的浏览器不支持 audio 标签。</audio>
             </div>
             <div v-else class="error-message">
-                <p>无法加载音频，请稍后重试。</p>
+                <p>正在加载音频。。。</p>
             </div>
         </div>
     </div>
@@ -25,7 +25,8 @@
 import { ref, computed, onMounted} from 'vue';
 import { useRoute } from 'vue-router';
 import api from '@/api';
-import type { MusicPlayer } from '@/types/musicplyer';
+import type { MusicPlayer, MusicCover } from '@/types/musicplyer';
+import defaultCover from '@/assets/images/musicplayer.png'
 
 const route = useRoute();
 const musicdata = computed(() => route.query);
@@ -33,11 +34,17 @@ interface MusicPlayerItem{
     id: string;
     name: string;
     url: string;
-    cover: string;
 }
+
+interface MusicCoverItem{
+    al: {
+        picUrl: string;
+    }
+}
+
 const MusicQuality = ref('standard')
 const musicplayer = ref<MusicPlayerItem[]>([])
-
+const musiccover = ref<MusicCoverItem[]>([]);
 const fetchMusic = async () => {
     try {
         const id = musicdata.value.id;
@@ -47,19 +54,35 @@ const fetchMusic = async () => {
             id: item.id,
             name: musicdata.value.name as string,
             url: item.url,
-            cover: musicdata.value.cover as string,
         }))
+        console.log(musicplayer.value)
     }catch(error){
         console.error('获取歌曲失败:', error);
     }
 }
 
+const fetchMusicCover = async () => {
+    try {
+        const id = musicdata.value.id;
+        if (!id) return;
+        const response = await api.get<MusicCover[]>('/song/detail?', { ids:id });
+        musiccover.value = (response.songs || []).map((item) => ({
+            al: {
+                picUrl: item.al.picUrl !== '' ? item.al.picUrl : defaultCover
+            }
+        }))
+    } catch (error) {
+        console.error('获取歌曲封面失败:', error);
+    }
+}
+
 onMounted(() => {
     fetchMusic();
+    fetchMusicCover();
 })
 </script>
 
-<style>
+<style scoped>
     .musicplayer-wrapper {
         padding: 20px;
         background-color: #f5f7fb;

@@ -6,3 +6,13 @@ export interface MusicArtist {
     musicSize: number;
     picUrl: string;
 }
+
+export interface ArtistSongs{
+    name: string;
+    id: number;
+    picUrl?: string;
+    ar: {
+        name: string;
+        id: number;
+    }[];
+}

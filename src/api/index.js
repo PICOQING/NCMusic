@@ -5,7 +5,7 @@ const Base_Url = 'http://localhost:3000/';
 // 创建axios实例
 const instance = axios.create({ 
     baseURL: Base_Url,
-    timeout: 10000,
+    timeout: 30000,
     withCredentials: true, // 网络请求跨域时携带cookie
 });
 

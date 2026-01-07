@@ -217,7 +217,6 @@ const measureHeights = async () => {
 // --- 添加分页相关的响应式数据 ---
 // 定义数据格式
 
-
 const currentPage = ref(1);
 const limit = 25; // 每页显示的歌曲数量
 interface ArtistSongsItem{
@@ -282,7 +281,11 @@ const totalPages = computed(() => {
 const goToPage = (page: number) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
-  }
+    }
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // 可选：平滑滚动（用户体验更好）
+  })
 };
 
 // 跳转歌曲播放页面
@@ -507,7 +510,7 @@ onBeforeUnmount(() => {
         display: flex;
         flex-direction: column;
         gap: 10px; /* 歌曲项目之间的间距 */
-        min-height: 1740px; /* 固定高度，容纳 25 首歌 */
+        min-height: auto; /* 固定高度，容纳 25 首歌 */
         overflow: hidden;  /* 隐藏超出部分，禁止内部滚动 */
         margin-bottom: 0; /* 移除底部内边距，给按钮留空间 */
         padding-bottom: 60px;

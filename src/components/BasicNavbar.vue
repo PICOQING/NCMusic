@@ -42,6 +42,7 @@ const handleSearch = () => {
         path: '/search',
         query:{keyword}
     })
+    searchKeyword.value = '';
 };
 </script>
 
